@@ -5,7 +5,9 @@
  */
 
 // 数据库配置
-define('SHARE_DB_PATH', __DIR__ . '/data/share.db');
+if (!defined('SHARE_DB_PATH')) {
+    define('SHARE_DB_PATH', __DIR__ . '/data/share.db');
+}
 
 /**
  * 获取数据库连接
