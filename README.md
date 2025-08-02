@@ -60,31 +60,10 @@
 
 ### 环境要求
 
-**后端环境**
+**环境**
 *   PHP ≥ 8.0（需开启  `mysqli`, `pdo_mysql` 扩展，推荐开启opcache）
 *   SQLite 3.0+
 *   Web 服务器：Apache/Nginx（推荐 Nginx 1.18+）
-
-**前端环境**
-*   Node.js ≥ 16.0
-*   npm 或 yarn 包管理器
-
-### 前端依赖安装
-
-```bash
-# 核心依赖
-npm install vue@next vue-router@4 element-plus
-
-# UI和图标
-npm install @fortawesome/fontawesome-free
-
-# 功能组件
-npm install chart.js vue-chart-3 qrcode-vue3
-npm install vue-easy-lightbox vue-plyr
-
-# HTTP客户端
-npm install axios
-```
 
 ### 部署步骤
 
