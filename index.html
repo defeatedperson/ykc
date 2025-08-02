@@ -1,0 +1,41 @@
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><title id="site-title">云阶快传 - 文件传输与分享平台</title><meta id="site-keywords" name="keywords" content="文件传输, 云存储, 快速分享, 在线传输, 云阶快传"><meta id="site-description" name="description" content="云阶快传是一款支持多端文件快速传输与分享的云服务平台，安全高效，操作便捷。"><script>// 动态加载站点配置
+      (function() {
+        // 获取当前协议和域名，兼容 http/https
+        const protocol = window.location.protocol;
+        const host = window.location.host;
+        const apiUrl = protocol + '//' + host + '/api/data/site.json';
+        
+        // 创建请求
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', apiUrl, true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              try {
+                const config = JSON.parse(xhr.responseText);
+                
+                // 更新页面标题
+                if (config.siteName) {
+                  document.getElementById('site-title').textContent = config.siteName + ' - 文件传输与分享平台';
+                  document.title = config.siteName + ' - YKC';
+                }
+                
+                // 更新关键词
+                if (config.keywords) {
+                  document.getElementById('site-keywords').setAttribute('content', config.keywords);
+                }
+                
+                // 更新描述
+                if (config.description) {
+                  document.getElementById('site-description').setAttribute('content', config.description);
+                }
+              } catch (error) {
+                console.warn('解析站点配置失败，使用默认配置:', error);
+              }
+            } else {
+              console.warn('无法加载站点配置，使用默认配置');
+            }
+          }
+        };
+        xhr.send();
+      })();</script><script defer="defer" src="./js/element-plus.13c1aef4.js"></script><script defer="defer" src="./js/vue-libs.2837bb70.js"></script><script defer="defer" src="./js/chunk-vendors.b1e591b2.js"></script><script defer="defer" src="./js/app.50760223.js"></script><link href="./css/element-plus.746c067c.css" rel="stylesheet"><link href="./css/fontawesome.27bfca3b.css" rel="stylesheet"><link href="./css/app.96ee9b57.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but my-vue-app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
