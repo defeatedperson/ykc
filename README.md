@@ -11,9 +11,10 @@
 
 后端 PHP 代码 **100% 开源**（零混淆 / 加密，附带完整注释），技术细节完全透明。
 
+##  ⚠ 提示
+如果未启用https，则关闭网页/刷新网页自动退出登录（无法保持登录）
+
 ## ✨ 核心特性
-
-
 
 *   **极简交互**：基于 StarUI v3 框架的清爽界面，聚焦文件管理核心功能，学习成本极低
 
@@ -23,11 +24,7 @@
 
 *   **后端开源**：后端代码无任何加密处理，注释覆盖率高，二次开发友好
 
-*   **跨平台兼容**：适配 Apache/Nginx 环境
-
 ## ⚙️ 技术架构
-
-
 
 | 模块      | 技术栈                        | 说明                 |
 | ------- | -------------------------- | ------------------ |
@@ -35,20 +32,7 @@
 | **后端**  | PHP 8.0+                   | 原生 PHP ，无框架依赖（JWT鉴权模块）   |
 | **数据库** | SQLite              | 轻量部署 |
 | **存储层** | 本地文件系统                     | 支持扩展 OSS 存储（计划中）   |
-| **部署**  | Docker/Apache/Nginx        | 提供 Docker 快速部署方案   |
-
-### 前端技术栈详细
-
-- **核心框架**: Vue 3 (Composition API)
-- **UI组件库**: Element Plus (现代化Vue 3组件库)
-- **路由管理**: Vue Router 4 (官方路由解决方案)
-- **图表组件**: Chart.js + Vue-Chart-3 (数据可视化)
-- **图标库**: Font Awesome Free (丰富的图标资源)
-- **二维码**: QRCode-Vue3 (二维码生成组件)
-- **图片预览**: Vue Easy Lightbox (图片查看器)
-- **视频播放**: Vue Plyr (媒体播放器组件)
-- **HTTP客户端**: Axios (API请求处理)
-- **自研框架**: StarUI v3 (现代化设计风格)
+| **部署**  | Docker/Nginx        | 提供 Docker 快速部署方案   |
 
 ## 🖥️ 界面预览
 ![分享设置](https://raw.githubusercontent.com/defeatedperson/ykc/refs/heads/main/photo/1.webp "分享设置")
@@ -56,18 +40,99 @@
 ![分享管理](https://raw.githubusercontent.com/defeatedperson/ykc/refs/heads/main/photo/3.webp "分享管理")
 ![文件管理](https://raw.githubusercontent.com/defeatedperson/ykc/refs/heads/main/photo/4.webp "文件管理")
 ![文件上传](https://raw.githubusercontent.com/defeatedperson/ykc/refs/heads/main/photo/5.webp "文件上传")
+
 ## 🚀 快速部署
 
 ### 环境要求
 
-**环境**
+**通用环境基础**
 *   PHP ≥ 8.0（需开启  `mysqli`, `pdo_mysql` 扩展，推荐开启opcache）
 *   SQLite 3.0+
-*   Web 服务器：Apache/Nginx（推荐 Nginx 1.18+）
 
-### 部署步骤
+**Web 服务器说明**
+*   推荐：Nginx 1.18+
+*   不推荐：Apache 环境（存在已知兼容问题，不建议使用）
 
-📚 详细部署文档：[点击查看安装手册](https://re.xcdream.com/9390.html)&#x20;
+
+### 部署方式推荐
+
+#### Docker部署（强烈推荐）
+Docker部署方式具有环境一致性高、更新便捷、数据持久化可靠等优势，是官方推荐的首选部署方式。
+
+##### 一、首次部署
+```bash
+# 1. 拉取最新镜像
+docker pull defeatedperson/ykc-app:latest
+
+# 2. 启动容器
+docker run -d \
+  --name ykc-cloud-transfer \
+  -p 8080:80 \
+  -v $(pwd)/web/api/auth/data:/var/www/html/api/auth/data \
+  -v $(pwd)/web/api/data:/var/www/html/api/data \
+  -v $(pwd)/web/api/file/data:/var/www/html/api/file/data \
+  -v $(pwd)/web/api/share/data:/var/www/html/api/share/data \
+  defeatedperson/ykc-app:latest
+```
+
+**参数说明**：
+- `-d`: 后台运行容器
+- `--name`: 指定容器名称（此处为`ykc-cloud-transfer`）
+- `-p`: 端口映射，将主机的 8080 端口映射到容器的 80 端口（可根据需求修改主机端口）
+- `-v`: 挂载数据卷，确保用户数据、文件、配置等内容在容器重启/更新后不丢失
+
+
+##### 二、访问应用
+启动容器后，通过以下地址访问应用：  
+`http://localhost:8080`  
+（若修改了主机端口，将`8080`替换为实际端口）
+
+
+##### 三、更新到最新版本
+```bash
+# 1. 停止并删除现有容器
+docker stop ykc-cloud-transfer
+docker rm ykc-cloud-transfer
+
+# 2. 拉取最新镜像
+docker pull defeatedperson/ykc-app:latest
+
+# 3. 重新启动容器（使用与首次部署相同的参数）
+docker run -d \
+  --name ykc-cloud-transfer \
+  -p 8080:80 \
+  -v $(pwd)/web/api/auth/data:/var/www/html/api/auth/data \
+  -v $(pwd)/web/api/data:/var/www/html/api/data \
+  -v $(pwd)/web/api/file/data:/var/www/html/api/file/data \
+  -v $(pwd)/web/api/share/data:/var/www/html/api/share/data \
+  defeatedperson/ykc-app:latest
+```
+
+
+##### 四、其他常用命令
+```bash
+# 查看容器日志
+docker logs -f ykc-cloud-transfer
+
+# 进入容器终端
+docker exec -it ykc-cloud-transfer /bin/sh
+
+# 查看运行中的容器
+docker ps
+
+# 查看所有容器（包括停止的）
+docker ps -a
+
+# 查看本地镜像
+docker images
+```
+
+
+#### 直接部署（不推荐Apache环境）
+若需直接部署（非Docker方式），请确保满足上述环境要求，且**避免使用Apache服务器**以减少兼容问题。
+
+📚 详细部署文档：[点击查看安装手册](https://re.xcdream.com/9390.html)
+
 
 ## 🌐 官网与社区
 
@@ -78,9 +143,7 @@
 
 ## 📜 开源协议
 
-本项目采用 **Apache License 2.0** 开源协议，允许商业使用，但需遵守以下条款：
-
-
+本项目采用 **Apache License 2.0** 开源协议，允许商业使用，但是严禁用于任何违法违规业务。
 
 **特别说明**：商业用途（特指二开/商用本软件，不含使用本软件分发自己的商用文件）需提前通过dp712@qq.com告知项目团队。
 
@@ -102,17 +165,6 @@
 *   [Vue.js](https://vuejs.org/) - 渐进式 JavaScript 框架
 *   [Element Plus](https://element-plus.org/) - 基于 Vue 3 的桌面端组件库
 *   [Vue Router](https://router.vuejs.org/) - Vue.js 官方路由管理器
-
-### UI 与交互
-*   [Font Awesome](https://fontawesome.com/) - 世界上最受欢迎的图标库
-*   [Vue Easy Lightbox](https://github.com/XiongAmao/vue-easy-lightbox) - 简洁易用的图片预览组件
-*   [Vue Plyr](https://github.com/sampotts/plyr) - 现代化媒体播放器组件
-
-### 功能组件
-*   [Chart.js](https://www.chartjs.org/) - 简单而灵活的 JavaScript 图表库
-*   [Vue-Chart-3](https://github.com/victorgarciaesgi/vue-chart-3) - Chart.js 的 Vue 3 封装
-*   [QRCode-Vue3](https://github.com/scholtz/qrcode-vue3) - Vue 3 二维码生成组件
-*   [Axios](https://axios-http.com/) - 基于 Promise 的 HTTP 客户端
 
 ### 后端与工具
 *   [PHP](https://www.php.net/) - PHP
