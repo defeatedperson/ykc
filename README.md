@@ -59,6 +59,7 @@
 
 #### Docker部署（强烈推荐）
 Docker部署方式具有环境一致性高、更新便捷、数据持久化可靠等优势，是官方推荐的首选部署方式。
+[![通过雨云一键部署](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-cn.svg)](https://app.rainyun.com/apps/rca/store/6854/dp712_)
 
 ##### 一、首次部署
 ```bash
