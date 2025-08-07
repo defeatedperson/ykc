@@ -24,6 +24,8 @@
 
 ## 🚀 推荐部署方式（Docker）
 
+[![通过雨云一键部署](https://rainyun-apps.cn-nb1.rains3.com/materials/deploy-on-rainyun-cn.svg)](https://app.rainyun.com/apps/rca/store/6854/dp712_)
+
 ### 环境准备
 
 Docker环境或PHP8+环境（推荐docker部署）
