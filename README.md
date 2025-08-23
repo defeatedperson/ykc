@@ -59,7 +59,9 @@ Docker环境或PHP8+环境（推荐docker部署）
        docker stop ykc-cloud-transfer
        docker rm ykc-cloud-transfer
     2. 拉取最新镜像（先删除，再拉取）：
+       
        docker rmi defeatedperson/ykc-app:latest
+       
        docker pull defeatedperson/ykc-app:latest
     4. 重新启动容器：
        docker run -d \
